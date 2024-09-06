@@ -24,5 +24,6 @@ end
 
 
 gem "capistrano", "~> 3.19"
+gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem "capistrano-rails", "~> 1.6"
 gem "capistrano3-puma", "~> 1.2"
