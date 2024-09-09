@@ -24,7 +24,7 @@ threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 # port ENV.fetch("PORT", 3000)
 
-bind "unix://#{shared_dir}/shared/sockets/puma.sock"
+bind "unix:///var/www/ideas/shared/sockets/puma.sock"
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
