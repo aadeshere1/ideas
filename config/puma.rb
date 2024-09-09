@@ -28,6 +28,7 @@ workers ENV.fetch("WEB_CONCURRENCY", 2)
 environment ENV.fetch("RAILS_ENV", "development")
 pidfile "/var/www/ideas/shared/tmp/pids/puma.pid"
 state_path "/var/www/ideas/shared/tmp/pids/puma.state"
+bind 'unix:///var/www/ideas/shared/tmp/sockets/puma.sock'
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
