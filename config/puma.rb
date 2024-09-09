@@ -24,11 +24,21 @@ threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-port ENV.fetch("PORT", 3000)
+workers ENV.fetch("WEB_CONCURRENCY", 2)
+environment ENV.fetch("RAILS_ENV", "development")
+pidfile "/var/www/ideas/shared/tmp/pids/puma.pid"
+state_path "/var/www/ideas/shared/tmp/pids/puma.state"
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
-# Specify the PID file. Defaults to tmp/pids/server.pid in development.
-# In other environments, only set the PID file if requested.
-pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+# Redirect stdout and stderr to files to capture logs in production:
+stdout_redirect '/var/www/ideas/shared/log/puma.stdout.log', '/var/www/ideas/shared/log/puma.stderr.log', true
+
+# Specifies the location to persist the process id. The default is "tmp/pids/server.pid".
+pidfile ENV.fetch("PIDFILE", "/var/www/ideas/shared/tmp/pids/server.pid")
+
+# On worker boot, this block will run. It's primarily used for reconnecting to the database.
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+end

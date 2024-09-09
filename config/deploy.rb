@@ -45,10 +45,26 @@ namespace :deploy do
       upload!('config/master.key', "#{shared_path}/config/master.key")
     end
   end
+
+  desc "rake create"
+  task :create_db do
+    on roles(:app) do
+      execute "$HOME/.rbenv/bin/rbenv exec bundle exec rake db:create"
+    end
+  end
+
+  desc "own directories"
+  task :own_path do
+    on roles(:app) do
+      execute "sudo mkdir -p /var/www"
+      execute "sudo chown -R deployer:deployer /var/www"
+    end
+  end
 end
 
+before 'deploy:check:directories', 'deploy:own_path'
 before 'deploy:check:linked_files', 'deploy:upload_config'
 before 'deploy:restart', 'puma:make_dirs'
 after 'deploy:publishing', 'deploy:restart'
 after 'deploy:restart', 'puma:restart'
-# before 'deploy:migrate', 'db:create'
+# before 'deploy:migrate', 'deploy:create_db'
