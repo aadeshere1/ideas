@@ -22,7 +22,8 @@
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
 threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
-port ENV.fetch("PORT", 3000)
+port ENV.fetch("PORT", 80)
+
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
