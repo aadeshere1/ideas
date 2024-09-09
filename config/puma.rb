@@ -25,7 +25,8 @@ threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 workers ENV.fetch("WEB_CONCURRENCY", 2)
-environment ENV.fetch("RAILS_ENV", "development")
+environment ENV.fetch("RAILS_ENV", "production")
+port ENV.fetch("PORT", 3000)
 pidfile "/var/www/ideas/shared/tmp/pids/puma.pid"
 state_path "/var/www/ideas/shared/tmp/pids/puma.state"
 bind 'unix:///var/www/ideas/shared/tmp/sockets/puma.sock'
